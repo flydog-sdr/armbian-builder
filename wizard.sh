@@ -53,7 +53,7 @@ archive_docker_volume() {
 execute_build() {
   cd ${BASE_PATH}/builder
   chmod +x compile.sh
-  bash -c "./compile.sh BUILD_MINIMAL=yes BOARD=orangepione USE_CCACHE=yes BUILD_DESKTOP=no RELEASE=bullseye BRANCH=current KERNEL_CONFIGURE=no KERNEL_ONLY=no"
+  bash -c "./compile.sh BUILD_MINIMAL=yes BOARD=orangepione USE_CCACHE=yes BUILD_DESKTOP=no RELEASE=bullseye BRANCH=current KERNEL_CONFIGURE=no"
 }
 
 main() {

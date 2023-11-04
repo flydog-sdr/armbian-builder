@@ -15,3 +15,9 @@ curl -o /tmp/docker.sh -fsSL get.docker.com
 chmod +x /tmp/docker.sh
 /tmp/docker.sh --mirror Aliyun
 rm -rf /tmp/docker.sh
+
+# Create a new user and set password
+rm /root/.not_logged_in_yet
+echo "root:flycat-sdr" | chpasswd
+useradd -m -s /bin/bash -G sudo flycat
+echo "flycat:flycat-sdr" | chpasswd

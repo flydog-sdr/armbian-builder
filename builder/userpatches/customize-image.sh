@@ -21,3 +21,4 @@ rm /root/.not_logged_in_yet
 echo "root:flycat-sdr" | chpasswd
 useradd -m -s /bin/bash -G sudo flycat
 echo "flycat:flycat-sdr" | chpasswd
+usermod -aG docker flycat

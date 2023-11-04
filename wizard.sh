@@ -36,7 +36,6 @@ deploy_apps() {
              --privileged \
              --restart always \
              --volume kiwi.config:/root/kiwi.config \
-             --volume kiwi.source:/root/FlyCat_SDR_GPS \
              flydog-sdr/flycat-sdr:latest
   sudo /etc/init.d/docker stop
 }

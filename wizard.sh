@@ -18,8 +18,9 @@ initialise_environment() {
   sudo modprobe binfmt_misc
   sudo apt-get update
   sudo apt-get install -y ${BUILD_DEPENDS}
-  curl https://get.docker.com | sed "s/20/1/g" > /tmp/docker.sh
-  sudo /tmp/docker.sh --mirror Aliyun
+  sudo curl https://get.docker.com | sed "s/20/1/g" > /tmp/docker.sh
+  sudo chmod +x /tmp/docker.sh
+  sudo sh /tmp/docker.sh --mirror Aliyun
   sudo /etc/init.d/docker restart
   sudo rm -rf /tmp/docker.sh \
          /var/lib/docker/* \

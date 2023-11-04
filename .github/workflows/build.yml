@@ -1,0 +1,47 @@
+name: Build FlyCat SDR Image
+
+on:
+    schedule:
+        - cron: 0 20 * * *
+    push:
+        branches:
+            - master
+    workflow_dispatch:
+
+jobs:
+    build:
+        runs-on: ubuntu-22.04
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+
+            - name: Set tag and release names
+              id: set_names
+              run: |
+                  tag_name="Release_$(date +'%Y%m%d%H%M%S')"
+                  echo "::set-output name=tag_name::$tag_name"
+
+            - name: Compile firmware
+              id: compile
+              run: |
+                  sudo ./wizard.sh
+                  echo "::set-output name=status::success"
+
+            # - name: Upload image
+            #   uses: actions/upload-artifact@v2
+            #   if: steps.compile.outputs.status == 'success'
+            #   with:
+            #       name: FlyCat_SDR_IMG
+            #       path: builder/output
+
+            # - name: Create release
+            #   uses: softprops/action-gh-release@v1
+            #   if: steps.compile.outputs.status == 'success'
+            #   env:
+            #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            #   with:
+            #       tag_name: ${{ steps.set_names.outputs.tag_name }}
+            #       body: |
+            #           This is the daily build Armbian image of FlyCat SDR.
+            #       files: builder/output/*

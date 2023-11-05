@@ -8,7 +8,7 @@ echo "param_spidev_spi_bus=0" | tee -a /boot/armbianEnv.txt
 curl -o /tmp/docker.sh -fsSL get.docker.com
 chmod +x /tmp/docker.sh
 /tmp/docker.sh --mirror Aliyun
-rm -rf /tmp/docker.sh
+rm -rf /tmp/docker.sh /var/lib/apt/lists/*
 apt-get clean
 
 # Setup Docker volume

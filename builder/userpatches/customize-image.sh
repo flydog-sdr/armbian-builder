@@ -9,6 +9,7 @@ curl -o /tmp/docker.sh -fsSL get.docker.com
 chmod +x /tmp/docker.sh
 /tmp/docker.sh --mirror Aliyun
 rm -rf /tmp/docker.sh
+apt-get clean
 
 # Setup Docker volume
 if [ -e /tmp/overlay/docker_volume.tar.gz ]; then

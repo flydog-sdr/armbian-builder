@@ -15,39 +15,39 @@ DOCKER_ARCHIVE="${BASE_PATH}/builder/userpatches/overlay/docker_volume.tar.gz"
 BUILD_DEPENDS="binfmt-support git curl"
 
 initialise_environment() {
-  sudo modprobe binfmt_misc
-  sudo apt-get update
-  sudo apt-get install -y ${BUILD_DEPENDS}
-  sudo curl https://get.docker.com | sed "s/20/1/g" > /tmp/docker.sh
-  sudo chmod +x /tmp/docker.sh
-  sudo sh /tmp/docker.sh --mirror Aliyun
-  sudo /etc/init.d/docker restart
-  sudo rm -rf /tmp/docker.sh \
+  modprobe binfmt_misc
+  apt-get update
+  apt-get install -y ${BUILD_DEPENDS}
+  curl https://get.docker.com | sed "s/20/1/g" > /tmp/docker.sh
+  chmod +x /tmp/docker.sh
+  sh /tmp/docker.sh --mirror Aliyun
+  /etc/init.d/docker restart
+  rm -rf /tmp/docker.sh \
          /var/lib/docker/* \
          ${DOCKER_ARCHIVE}
-  echo y | sudo docker system prune
-  sudo /etc/init.d/docker restart
+  echo y | docker system prune
+  /etc/init.d/docker restart
   sleep 3s
 }
 
 deploy_apps() {
-  sudo docker run -d \
-             --name flycat-sdr \
-             --network host \
-             --privileged \
-             --restart always \
-             --volume kiwi.config:/root/kiwi.config \
-             flydog-sdr/flycat-sdr:latest
-  sudo /etc/init.d/docker stop
+  docker run -d \
+        --name flycat-sdr \
+        --network host \
+        --privileged \
+        --restart always \
+        --volume kiwi.config:/root/kiwi.config \
+        flydog-sdr/flycat-sdr:latest
+  /etc/init.d/docker stop
 }
 
 archive_docker_volume() {
-  sudo tar -czf ${DOCKER_ARCHIVE} /var/lib/docker
+  tar -czf ${DOCKER_ARCHIVE} /var/lib/docker
   username=$(whoami)
-  sudo chown ${username}:${username} ${DOCKER_ARCHIVE}
-  sudo rm -rf /var/lib/docker/*
-  echo y | sudo docker system prune
-  sudo /etc/init.d/docker restart
+  chown ${username}:${username} ${DOCKER_ARCHIVE}
+  rm -rf /var/lib/docker/*
+  echo y | docker system prune
+  /etc/init.d/docker restart
 }
 
 execute_build() {

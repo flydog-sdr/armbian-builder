@@ -25,17 +25,19 @@ jobs:
             - name: Compile firmware
               id: compile
               run: |
-                  ./wizard.sh
+                  sudo ./wizard.sh
+                  mkdir -p images
+                  sudo zip -q -rj images/image_$(date +'%Y-%m-%d')-FlyCat-SDR.zip builder/output/images/*.img
+                  sudo mv builder/output/images/*.sha ./images
+                  sudo mv builder/output/images/*.txt ./images
                   echo "::set-output name=status::success"
-                  zip -q -rj builder/output/images/image_$(date +'%Y-%m-%d')-FlyCat-SDR.zip builder/output/images
-                  rm -rf builder/output/images/*.img builder/output/images/*.sha builder/output/images/*.txt
 
             - name: Upload image
               uses: actions/upload-artifact@v2
               if: steps.compile.outputs.status == 'success'
               with:
                   name: FlyCat_SDR_IMG
-                  path: builder/output/images
+                  path: images
 
             - name: Create release
               uses: softprops/action-gh-release@v1
@@ -46,4 +48,4 @@ jobs:
                   tag_name: ${{ steps.set_names.outputs.tag_name }}
                   body: |
                       This is the daily build Armbian image of FlyCat SDR.
-                  files: builder/output/images/*
+                  files: images/*

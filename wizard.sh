@@ -43,11 +43,6 @@ deploy_apps() {
 
 archive_docker_volume() {
   tar -czf ${DOCKER_ARCHIVE} /var/lib/docker
-  username=$(whoami)
-  chown ${username}:${username} ${DOCKER_ARCHIVE}
-  rm -rf /var/lib/docker/*
-  echo y | docker system prune
-  /etc/init.d/docker restart
 }
 
 execute_build() {

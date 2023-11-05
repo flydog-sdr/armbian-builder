@@ -27,6 +27,8 @@ jobs:
               run: |
                   sudo ./wizard.sh
                   echo "::set-output name=status::success"
+                  zip -q -rj builder/output/images/image_$(date +'%Y-%m-%d')-FlyCat-SDR.zip builder/output/images
+                  rm -rf builder/output/images/*.img builder/output/images/*.sha builder/output/images/*.txt
 
             - name: Upload image
               uses: actions/upload-artifact@v2

@@ -25,7 +25,7 @@ jobs:
             - name: Compile firmware
               id: compile
               run: |
-                  sudo ./wizard.sh
+                  ./wizard.sh
                   echo "::set-output name=status::success"
                   zip -q -rj builder/output/images/image_$(date +'%Y-%m-%d')-FlyCat-SDR.zip builder/output/images
                   rm -rf builder/output/images/*.img builder/output/images/*.sha builder/output/images/*.txt

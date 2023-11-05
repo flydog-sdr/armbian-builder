@@ -37,7 +37,14 @@ deploy_apps() {
         --privileged \
         --restart always \
         --volume kiwi.config:/root/kiwi.config \
-        flydog-sdr/flycat-sdr:latest
+        bclswl0827/flycat-sdr:latest
+  docker run -d \
+        --name flycat-admin \
+        --network host \
+        --privileged \
+        --restart always \
+        --volume kiwi.config:/data \
+        bclswl0827/flycat-admin:latest
   /etc/init.d/docker stop
 }
 

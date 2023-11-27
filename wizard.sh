@@ -18,7 +18,9 @@ initialise_environment() {
   modprobe binfmt_misc
   apt-get update
   apt-get install -y ${BUILD_DEPENDS}
-  curl https://get.docker.com | sed "s/20/1/g" > /tmp/docker.sh
+  curl https://get.docker.com \
+    | sed "s/20/1/g" \
+    | sed "s/mirrors.aliyun.com/mirrors.bfsu.edu.cn/g" > /tmp/docker.sh
   chmod +x /tmp/docker.sh
   sh /tmp/docker.sh --mirror Aliyun
   /etc/init.d/docker restart

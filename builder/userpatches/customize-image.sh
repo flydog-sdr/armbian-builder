@@ -5,7 +5,9 @@ echo "overlays=spi-spidev uart1 uart2 uart3" | tee -a /boot/armbianEnv.txt
 echo "param_spidev_spi_bus=0" | tee -a /boot/armbianEnv.txt
 
 # Install Docker
-curl -o /tmp/docker.sh -fsSL get.docker.com
+curl --insecure https://get.docker.com \
+    | sed "s/-fsSL/-L --insecure/g" \
+    | sed "s/mirrors.aliyun.com/mirrors.bfsu.edu.cn/g" > /tmp/docker.sh
 chmod +x /tmp/docker.sh
 /tmp/docker.sh --mirror Aliyun
 rm -rf /tmp/docker.sh /var/lib/apt/lists/*
